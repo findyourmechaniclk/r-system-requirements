@@ -35,6 +35,7 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: '20'
+          cache: npm
 
       - name: Test rules
         run: |
@@ -125,7 +126,7 @@ jobs:
 
           CDN_CHECKSUM=$(curl -fsS "${{ env.MANIFEST_URL }}/sysreqs/v1/latest_checksum.txt" | tr -d '[:space:]')
           if [ "${CDN_CHECKSUM}" != "${CHECKSUM}" ]; then
-            echo "::error::CDN latest_checksum.txt (${CDN_CHECKSUM}) does not match uploaded checksum (${CHECKSUM})"
+            echo "::error::CDN latest_checksum.txt (${CDN_CHECKSUM}) does not match expected checksum (${CHECKSUM})"
             exit 1
           fi
           echo "latest_checksum.txt matches: ${CDN_CHECKSUM}"
